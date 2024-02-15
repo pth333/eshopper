@@ -32,7 +32,7 @@
 					<div class="logo pull-left">
 						<a href="index.html"><img src="/Eshopper/images/home/logo.png" alt="" /></a>
 					</div>
-					
+
 				</div>
 				<div class="col-sm-8">
 					<div class="shop-menu pull-right">
@@ -61,14 +61,18 @@
 							<span class="icon-bar"></span>
 						</button>
 					</div>
-				@include('components.main_menu')
+					@include('components.main_menu')
 				</div>
 				<div class="col-sm-3">
-					<div class="search_box pull-right">
-						<input type="text" placeholder="Search" />
+					<div class="pull-right" >
+					<input class="form-control custom-input" data-url="{{ route('search')}}" type="text" placeholder="Tìm kiếm" />
+						<div class="search-ajax-result"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div><!--/header-bottom-->
 </header><!--/header-->
+<script>
+	
+</script>

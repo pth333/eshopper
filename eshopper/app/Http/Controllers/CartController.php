@@ -14,7 +14,7 @@ class CartController extends Controller
     {
         $categoriesLimit = Category::where('parent_id', 0)->take(3)->get();
         $cartProducts = session()->get('cart');
-        return view('cart', compact('categoriesLimit', 'cartProducts'));
+        return view('cart.cart', compact('categoriesLimit', 'cartProducts'));
     }
     public function AddToCart($id)
     {
@@ -55,7 +55,7 @@ class CartController extends Controller
             session()->put('cart', $carts);
             $cartProducts = session()->get('cart');
             // dd($carts);
-            $cartComponent = view('cart', compact('categoriesLimit', 'cartProducts'))->render();
+            $cartComponent = view('cart.cart', compact('categoriesLimit', 'cartProducts'))->render();
             return response()->json([
                 'cart_component' => $cartComponent,
                 'code' => 200
@@ -76,7 +76,7 @@ class CartController extends Controller
                 $cartProducts = session()->get('cart');
                 
                 // dd($cartProducts);
-                $cartComponent = view('cart', compact('categoriesLimit', 'cartProducts'))->render();
+                $cartComponent = view('cart.cart', compact('categoriesLimit', 'cartProducts'))->render();
                 return response()->json([
                     'cart_component' => $cartComponent,
                     'code' => 200

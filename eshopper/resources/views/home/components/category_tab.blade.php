@@ -1,3 +1,6 @@
+@php
+$files = 'http://127.0.0.1:8000';
+@endphp
 <div class="category-tab">
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
@@ -14,7 +17,7 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <img src="{{config('app.urls.base') . $productItemTabs->feature_image_path}}" alt="" />
+                            <img src="{{$files . $productItemTabs->feature_image_path}}" alt="" />
                             <h2>{{number_format($productItemTabs->price)}} VND</h2>
                             <p>{{$productItemTabs->name}}</p>
                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>

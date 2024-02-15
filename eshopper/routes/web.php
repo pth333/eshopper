@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AjaxSearchController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ShowProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/homepage',[HomeController::class,'index'])->name('home');
+// show product
+Route::get('/show/{id}',[ShowProductController::class,'showProduct'])->name('showProduct');
+// tìm kiếm sản phẩm
+Route::get('search',[AjaxSearchController::class,'ajaxSearch'])->name('search');
+// Đăng nhập
 Route::get('/login',[AdminUserController::class,'loginUsers'])->name('login');
 
 Route::post('/login',[
@@ -30,8 +37,10 @@ Route::get('category/{slug}/{id}',[
     'uses' => 'App\Http\Controllers\CategoryController@index'
 ]);
 
-Route::get('/cart',[CartController::class,'index'])->name('cart');
 
+// Cart
+Route::get('/cart',[CartController::class,'index'])->name('cart');
 Route::get('product/add-to-cart/{id}',[CartController::class,'AddToCart'])->name('addToCart');
 Route::get('product/update-cart',[CartController::class,'updateCart'])->name('updateCart');
 Route::get('product/delete-cart',[CartController::class,'deleteCart'])->name('deleteCart');
+
