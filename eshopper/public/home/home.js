@@ -1,7 +1,7 @@
 
 jQuery(document).ready(function () {
     // Bắt sự kiện click nút "Add to cart"
-    jQuery('.add-to-cart').on('click', function (e) {
+    jQuery('.cart').on('click', function (e) {
         e.preventDefault();
 
         let urlCart = jQuery(this).data('url');
@@ -16,7 +16,11 @@ jQuery(document).ready(function () {
             },
             dataType: 'json',
             success: function (data) {
-                alert('Thêm sản phẩm thành công');
+                if(data.cart != ''){
+                    swal('Bạn đã thêm sản phẩm thành công!',{
+                        icon: 'success'
+                    });
+                }
             },
 
             error: function (error) {

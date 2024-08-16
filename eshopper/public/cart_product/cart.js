@@ -29,6 +29,7 @@ jQuery(document).ready(function () {
         e.preventDefault();
         deleteProductCart();
     })
+
     // Hàm cập nhật số lượng
     function updateQuantity(button, delta) {
         // Lấy giá trị hiện tại từ input
@@ -64,9 +65,9 @@ jQuery(document).ready(function () {
         var updateCartUrl = jQuery('.cart_wrapper').data('url');
         // alert(updateCartUrl);
         // Lấy thông tin giỏ hàng cập nhật từ các ô input
-        jQuery('.cart_item').each(function () {
+        jQuery('.cart_total').each(function () {
             var productId = jQuery(this).data('product-id');
-            var quantity = parseInt(jQuery(this).closest('tr').find('input.cart_quantity_input').val()) || 0;
+            var quantity = parseInt(jQuery(this).closest('tr').find('input.cart_quantity_input').val());
             // Gửi yêu cầu Ajax
             jQuery.ajax({
                 type: 'GET',
@@ -75,13 +76,15 @@ jQuery(document).ready(function () {
                     productId: productId,
                     quantity: quantity
                 },
-                dataType: 'json',
                 success: function (data) {
                     // Cập nhật giá trị tổng tiền của toàn bộ giỏ hàng
-                    var $cartComponent = $(data.cart_component);
+                    var cartComponent = jQuery('body').html(data.cart_component);
 
-                    var cartGrandTotalValue = parseFloat($cartComponent.find('.cart_grand_total span').text().replace(/[^\d.-]/g, ''));
+
+                    var cartGrandTotalValue = parseFloat(cartComponent.find('.cart_grand_total span').text().replace(/[^\d.-]/g, ''));
+                    console.log(cartGrandTotalValue);
                     jQuery('.cart_grand_total span').text(cartGrandTotalValue.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+
                 },
                 error: function (error) {
                     // Xử lý lỗi (nếu có)
@@ -93,9 +96,9 @@ jQuery(document).ready(function () {
 
     function deleteProductCart(){
         let urlRequest = jQuery('.cart_quantity_delete').data('url');
-        let productId = jQuery('.cart_item').data('product-id');
+        let productId = jQuery('.cart_quantity_delete').data('product-id');
         swal({
-            title: "Bạn có chắc chắn muốn xóa sản phẩm?",        
+            title: "Bạn có chắc chắn muốn xóa sản phẩm?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -106,11 +109,10 @@ jQuery(document).ready(function () {
                     type: 'GET',
                     url: urlRequest,
                     data:{productId: productId},
-                   
                     success: function(data){
                         if(data.code === 200){
-                            jQuery('.cart_wrapper').html(data.cart_component);
-                            
+                            jQuery('body').html(data.cart_component);
+
                         }
                     },
                     error: function (){

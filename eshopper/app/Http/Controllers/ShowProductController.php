@@ -13,6 +13,7 @@ class ShowProductController extends Controller
         $products = Product::find($id);
         $categories = Category::where('parent_id',0)->get();
         $categoriesLimit = Category::where('parent_id', 0)->take(3)->get();
-        return view('show_product',compact('products','categories','categoriesLimit'));
+        $productRecommend = Product::Latest('views_count','desc')->take(12)->get();
+        return view('show_product',compact('products','categories','categoriesLimit','productRecommend'));
     }
 }

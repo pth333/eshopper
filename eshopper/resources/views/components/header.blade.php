@@ -64,7 +64,7 @@
 					@include('components.main_menu')
 				</div>
 				<div class="col-sm-3">
-					<div class="pull-right" >
+					<div class="pull-right1" >
 					<input class="form-control custom-input" data-url="{{ route('search')}}" type="text" placeholder="Tìm kiếm" />
 						<div class="search-ajax-result"></div>
 					</div>

@@ -18,7 +18,8 @@ $files = 'http://127.0.0.1:8000'
                                 <img src="{{ $files . $productRecommendItem->feature_image_path}}" alt="" />
                                 <h2>{{number_format($productRecommendItem->price)}} VND</h2>
                                 <p>{{$productRecommendItem->name}}</p>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                @csrf
+                                <a href="" data-url="{{ route('addToCart',['id' => $productRecommendItem->id])}}" class="btn btn-default cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
 
                         </div>
