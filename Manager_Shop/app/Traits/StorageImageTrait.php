@@ -18,8 +18,8 @@ trait StorageImageTrait
             // ten file name tren he thong
             $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
             $filePath = $request->file($fieldName)->storeAs('public/' . $foderName . '/' . auth()->id(), $fileNameHash);
-            $fileFieldName = $request->file($fieldName);
-            dd($fileFieldName);
+            // $fileFieldName = $request->file($fieldName);
+            // dd($fileFieldName);
             $dataUploadTrait = [
                 'file_name' => $fileNameOrigin,
                 'file_path' => Storage::url($filePath)
@@ -28,7 +28,7 @@ trait StorageImageTrait
         }else{
             return null;
         }
-      
+
     }
     public function storageTraitUploadMultiple($file, $foderName)
     {

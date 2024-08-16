@@ -3,7 +3,7 @@
 @section('title','Product List')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('admins/product/index/list.css') }}">
+<link rel="stylesheet" href="{{ asset('admins/product/index/list.css') }}">
 @endsection
 
 @section('content')
@@ -15,8 +15,11 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-
-                <div class="col col-md-12">
+                <div class="col col-md-8">
+                    <input class="value-input" data-url="{{ route('searchAjax')}}" type="text" placeholder="Tìm kiếm sản phẩm">
+                    <div class="result-ajax"></div>
+                </div>
+                <div class="col col-md-4">
                     <a href="{{ route('products.create')}}" class="btn btn-success btn-sm float-right">Add</a>
                 </div>
             </div>
@@ -27,6 +30,7 @@
                     <th>STT</th>
                     <th>Tên sản phẩm</th>
                     <th>Giá</th>
+                    <th>Giá KM </th>
                     <th>Hình ảnh</th>
                     <th>Danh mục</th>
                     <th>Action</th>
@@ -37,10 +41,12 @@
                 @foreach($products as $product)
 
                 <tr>
-                
+
                     <td>{{ $product->id}}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ number_format($product->price) }}</td>
+                    <td>{{ number_format((float) $product->sale_price) }}</td>
+
                     <td>
                         <img class="products_image" src="{{ $product->feature_image_path }}" alt="">
                     </td>
@@ -51,10 +57,8 @@
                             @method('DELETE')
                             <a href="" class="btn btn-primary btn-sm">View</a>
                             <a href="{{ route('products.edit', ['id' => $product->id]) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="" 
-                            data-url="{{ route('products.destroy', ['id' => $product->id]) }}" 
-                            class="btn btn-danger btn-sm action_delete">Delete</a>
-                    
+                            <a href="" data-url="{{ route('products.destroy', ['id' => $product->id]) }}" class="btn btn-danger btn-sm action_delete">Delete</a>
+
                         </form>
 
                     </td>
@@ -74,11 +78,12 @@
             {{ $products->links('pagination::bootstrap-4') }}
         </div>
     </div>
-  
+
 </div>
 
 @endsection
 @section('js')
 <script src="{{ asset('vendors/sweetAlert2/sweetalert.min.js') }}"></script>
 <script src="{{ asset('admins/main.js') }}"></script>
+<script src="{{ asset('admins/search/search.js') }}"></script>
 @endsection

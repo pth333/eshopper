@@ -34,7 +34,7 @@
                         <div class="col-md-12">
 
                             <div class="row">
-                                <div class="checkall" >
+                                <div class="checkall">
                                     <label>
                                         <input type="checkbox" class="check_all">
                                         Check All
@@ -71,8 +71,9 @@
                             </div>
 
                         </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 

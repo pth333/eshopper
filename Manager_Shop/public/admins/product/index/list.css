@@ -1,5 +1,5 @@
 .products_image{
     width: 150px;
-    height: 100px;
+    height: auto;
     object-fit: cover;
 }

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\UserAddRequest;
 
 class AdminUserController extends Controller
 {
@@ -32,7 +33,7 @@ class AdminUserController extends Controller
         $roles = $this->role->all();
         return view('admin.user.add', compact('roles'));
     }
-    public function store(Request $request)
+    public function store(UserAddRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -58,7 +59,10 @@ class AdminUserController extends Controller
     public function edit(string $id)
     {
         $roles = $this->role->all();
+        // dd($roles);
         $user = $this->user->find($id);
+        // dd($user);
+
         return view('admin.user.edit', compact('roles', 'user'));
     }
     public function update(Request $request, string $id)
@@ -70,9 +74,19 @@ class AdminUserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
-            // Xem lại
+
+            // foreach($request->role_id as $roleItem){
+            //     DB::table('role_user')->insert([
+            //         'role_id' => $roleItem,
+            //         'user_id' => $user->id
+            //     ]);
+            // }
             $user = $this->user->find($id);
+            // dd($request->role_id);
             $user->roles()->sync($request->role_id);
+            // dd($user);
+            // $user->save();
+            // dd($request->role_id);
             // dd($user);
             DB::commit();
             return redirect()->route('users.index');

@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -32,3 +33,4 @@ Route::prefix('categories')->group(function () {
         'middleware' => 'can:category_delete'
     ]);
 });
+

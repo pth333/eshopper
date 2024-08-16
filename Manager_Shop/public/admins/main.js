@@ -1,8 +1,8 @@
 function actionDelete(event) {
     event.preventDefault();
     //  $(this) laf nut click vao button
-    let urlRequest = $(this).data('url');
-    let that = $(this);
+    let urlRequest = jQuery(this).data('url');
+    let that = jQuery(this);
     swal({
         title: "Bạn có chắc chắn muốn xóa?",
         text: "Bạn sẽ không thể hoàn tác lại nó!",
@@ -12,7 +12,7 @@ function actionDelete(event) {
     })
         .then((willDelete) => {
             if (willDelete) {
-                $.ajax({
+                jQuery.ajax({
                     type: 'GET',
                     url: urlRequest,
                     success: function (data) {
@@ -33,7 +33,7 @@ function actionDelete(event) {
             }
         });
 }
-$(function () {
-    $(document).on('click', '.action_delete', actionDelete);
+jQuery(function () {
+    jQuery(document).on('click', '.action_delete', actionDelete);
 });
 

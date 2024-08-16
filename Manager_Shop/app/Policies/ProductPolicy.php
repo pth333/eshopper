@@ -35,17 +35,18 @@ class ProductPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, $id): bool
+    public function update(User $user): bool
     {
-        $product = new Product();
-        $porductPolicy = $product->find($id);
+        // $product = new Product();
+        // $porductPolicy = $product->find($id);
         // $product = Product::find($id);
             // dd($product);
             // dd($user->id);
-            if ($user->checkPermissionAccess('edit_product') && $user->id == $porductPolicy->user_id ){
-                return true;
-            }
-            return false;  
+            // if ($user->checkPermissionAccess('edit_product') && $user->id == $porductPolicy->user_id ){
+            //     return true;
+            // }
+            // return false;
+        return $user->checkPermissionAccess('edit_product');
     }
 
     /**

@@ -4,9 +4,9 @@
 
 @section('content')
 <div class="content-wrapper">
-  
+
     @include('partials.content-header', ['name' => 'Category','key' => 'Add'])
- 
+
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -14,13 +14,16 @@
                     <form action="{{ route('categories.store')}}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label>Ten danh muc</label>
-                            <input type="text" class="form-control" placeholder="Nhap ten dnah muc" name="name">
+                            <label>Tên danh mục</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nhập tên danh mục" name="name">
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label>Chon danh muc</label>
+                            <label>Chọn danh mục</label>
                             <select class="form-control" name="parent_id">
-                                <option value="0">Chon danh muc cha</option>
+                                <option value="0">Chọn danh mục cha</option>
                                 {!! $htmlOption !!}
                             </select>
                         </div>
@@ -30,7 +33,7 @@
 
             </div>
         </div>
-  
+
     </div>
 </div>
 

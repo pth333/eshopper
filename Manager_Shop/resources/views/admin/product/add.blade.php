@@ -12,28 +12,41 @@
 <div class="content-wrapper">
 
     @include('partials.content-header', ['name' => 'Procduct','key' => 'Edit'])
+
     <form action="{{ route('products.store')}}" method="post" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-6">
+                    @csrf
+                    <div class="col-md-12">
 
-                        @csrf
                         <div class="form-group">
                             <label>Tên sản phẩm</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nhập tên sản phẩm" name="name" value="{{ old('name') }}">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Nhập tên sản phẩm" name="name">
                             @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label>Giá sản phẩm</label>
-                            <input type="text" class="form-control @error('price') is-invalid @enderror" placeholder="Nhập giá sản phẩm" name="price" value="{{ old('price') }}">
-                            @error('price')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Giá sản phẩm</label>
+                                    <input type="text" class="form-control @error('price') is-invalid @enderror" placeholder="Nhập giá sản phẩm" name="price">
+                                    @error('price')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Giá KM</label>
+                                    <input type="text" class="form-control @error('sale_price') is-invalid @enderror" placeholder="Nhập giá KM" name="sale_price">
+                                    @error('sale_price')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-
                         <div class="form-group">
                             <label>Ảnh đại diện</label>
                             <input type="file" class="form-control-file" name="feature_image_path">

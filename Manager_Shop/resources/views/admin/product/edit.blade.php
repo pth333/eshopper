@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title','Add product')
+@section('title','Edit product')
 
 @section('css')
 <link href="{{ asset('vendors/select2/select2.min.css')}}" rel="stylesheet" />
@@ -11,23 +11,34 @@
 @section('content')
 <div class="content-wrapper">
 
-    @include('partials.content-header', ['name' => 'Procduct','key' => 'Add'])
+    @include('partials.content-header', ['name' => 'Procduct','key' => 'Edit'])
 
     <form action="{{ route('products.update',['id' => $product->id] )}}" method="post" enctype="multipart/form-data">
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     @csrf
-                    <div class="col-md-6">
+                    <div class="col-md-12">
 
                         <div class="form-group">
                             <label>Tên sản phẩm</label>
                             <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" name="name" value="{{ $product->name }}">
                         </div>
-                        <div class="form-group">
-                            <label>Giá sản phẩm</label>
-                            <input type="text" class="form-control" placeholder="Nhập giá sản phẩm" name="price" value="{{ $product->price }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Giá sản phẩm</label>
+                                    <input type="text" class="form-control" placeholder="Nhập giá sản phẩm" name="price" value="{{ $product->price }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Giá KM</label>
+                                    <input type="text" class="form-control" placeholder="Nhập giá KM" name="sale_price" value="{{ $product->sale_price }}">
+                                </div>
+                            </div>
                         </div>
+
 
                         <div class="form-group">
                             <label>Ảnh đại diện</label>

@@ -7,6 +7,7 @@ use App\Components\Recusive;
 use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Traits\DeleteModelTrait;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -47,12 +48,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->category->create([
-            'name' => $request->name,
-            'parent_id' => $request->parent_id,
-            'slug' => Str::slug($request->name, '-')
-        ]);
-        return redirect()->route('categories.index');
+        $validated = [
+            'name' => 'required|unique:categories',
+        ];
+
+        $message = [
+            'name.required' => 'Danh mục không được để trống',
+            'name.unique' => 'Danh mục đã bị trùng',
+        ];
+
+        $validator = Validator::make($request->all(), $validated, $message);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            $this->category->create([
+                'name' => $request->name,
+                'parent_id' => $request->parent_id,
+                'slug' => Str::slug($request->name, '-')
+            ]);
+            return redirect()->route('categories.index');
+        }
     }
 
 

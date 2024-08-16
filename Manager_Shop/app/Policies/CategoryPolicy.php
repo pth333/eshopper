@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryPolicy
 {
@@ -21,7 +22,10 @@ class CategoryPolicy
      */
     public function view(User $user): bool
     {
-        return $user->checkPermissionAccess('list_category');
+        
+        $permissionAccess = $user->checkPermissionAccess('list_category');
+        return $permissionAccess === true;
+        
     }
 
     /**

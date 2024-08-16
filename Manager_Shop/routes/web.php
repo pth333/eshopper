@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchAjaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,13 +17,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', function () {
-    return view('home');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-Route::get('/admin',[AdminController::class,'loginAdmin']);
-Route::post('/admin',[AdminController::class,'postLoginAdmin']);
+// Route::get('/login',[AdminController::class],'loginAdmin');
+// Route::post('/login',[AdminController::class],'postLoginAdmin');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Coupon
+Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
+Route::get('/create', [CouponController::class, 'create'])->name('coupon.create');
+Route::post('/store', [CouponController::class, 'store'])->name('coupon.store');
+Route::delete('/destroy/{id}',[CouponController::class, 'destroy'])->name('coupon.destroy');
+
+// TÌm kiếm
+Route::get('/search', [SearchAjaxController::class, 'searchAjax'])->name('searchAjax');
 
 
-
-
+require __DIR__ . '/auth.php';

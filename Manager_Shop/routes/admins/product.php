@@ -19,7 +19,7 @@ Route::prefix('products') -> group(function(){
     Route::get('/edit/{id}', [
         'as' => 'products.edit',
         'uses' => 'App\Http\Controllers\AdminProductController@edit',
-        'middleware' => 'can:product_edit,id'
+        'middleware' => 'can:product_edit'
     ]);
     Route::post('/update/{id}', [
         'as' => 'products.update',

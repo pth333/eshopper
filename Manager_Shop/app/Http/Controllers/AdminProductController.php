@@ -66,45 +66,49 @@ class AdminProductController extends Controller
     public function store(ProductAddRequest $request)
     {
         try {
-            // bdau 
+            // bdau
             DB::beginTransaction();
             $dataProductCreate = [
                 'name' => $request->name,
                 'price' => $request->price,
+                'sale_price' => $request->sale_price,
                 'content' => $request->content,
                 'user_id' => auth()->id(),
-                'category_id' => $request->category_id
+                'category_id' => $request->category_id,
             ];
-
+            // dd($dataProductCreate);
             $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product');
+            // dd($dataUploadFeatureImage);
 
             if (!empty($dataUploadFeatureImage)) {
                 $dataProductCreate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
                 $dataProductCreate['feature_image_path'] = $dataUploadFeatureImage['file_path'];
             }
-            $product = $this->product->create($dataProductCreate);
+            $products =  $this->product->create($dataProductCreate);
+            // dd($products);
             // chen data vao product_images
             if ($request->hasFile('image_path')) {
                 foreach ($request->image_path as $fileItem) {
                     $dataProductImageDetail = $this->storageTraitUploadMultiple($fileItem, 'product');
                     // dd($dataProductImageDetail);
-                    $product->images()->create([
+                    $products->images()->create([
                         'image_path' => $dataProductImageDetail['file_path'],
                         'image_name' => $dataProductImageDetail['file_name'],
                     ]);
                 }
             }
             // chen tags cho product
-            // dd($request->tags);
+            // dd($product);
             if (!empty($request->tags)) {
                 foreach ($request->tags as $tagItem) {
                     // chen vaof tag
                     $tagInstance = $this->tag->firstOrCreate(['name' => $tagItem]);
                     $tagIds[] = $tagInstance->id;
                 }
-                $product->tags()->attach($tagIds);
+                $products->tags()->attach($tagIds);
             }
 
+            // dd($this->product);
             // dam bao chay dung het ms insert dlieu
             DB::commit();
             return redirect()->route('products.index');
@@ -134,15 +138,17 @@ class AdminProductController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            // bdau 
+            // bdau
             DB::beginTransaction();
             $dataProductUpdate = [
                 'name' => $request->name,
                 'price' => $request->price,
+                'sale_price' => $request->sale_price,
                 'content' => $request->content,
                 'user_id' => auth()->id(),
                 'category_id' => $request->category_id
             ];
+            // dd($dataProductUpdate);
             $dataUploadFeatureImage = $this->storageTraitUpload($request, 'feature_image_path', 'product');
             if (!empty($dataUploadFeatureImage)) {
                 $dataProductUpdate['feature_image_name'] = $dataUploadFeatureImage['file_name'];
@@ -151,6 +157,8 @@ class AdminProductController extends Controller
             // pthuc update trar ve gtri true hoac false nen ko ther gan
             $this->product->find($id)->update($dataProductUpdate);
             $product = $this->product->find($id);
+
+            // dd($product);
             // chen data vao product_images
             if ($request->hasFile('image_path')) {
                 $this->productImage->where('product_id', $id)->delete();
@@ -173,7 +181,7 @@ class AdminProductController extends Controller
                 }
                 $product->tags()->sync($tagIds);
             }
-
+            // dd($this->product);
             // dam bao chay dung het ms insert dlieu
             DB::commit();
             return redirect()->route('products.index');
