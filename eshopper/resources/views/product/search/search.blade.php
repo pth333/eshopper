@@ -4,9 +4,9 @@ $files = 'http://127.0.0.1:8000'
 
 @foreach($dataSearch as $data)
 <div class="media">
-    <a href="{{ route('showProduct', ['id' => $data->id]) }}" class="pull-left"><img src="{{ $files.$data->feature_image_path}}" class="media-object"></a>
+    <a href="{{ route('showProduct', ['id' => $data->id, 'slug' => $data->slug]) }}" class="pull-left"><img src="{{ $files.$data->feature_image_path}}" class="media-object"></a>
     <div class="media-body">
-        <a href="{{ route('showProduct', ['id' => $data->id]) }}">
+        <a href="{{ route('showProduct', ['id' => $data->id, 'slug' => $data->slug]) }}">
             <h4 class="media-heading">{{ $data->name}}</h4>
         </a>
         <p></p>

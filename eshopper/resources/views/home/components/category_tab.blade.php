@@ -13,7 +13,7 @@ $files = 'http://127.0.0.1:8000';
         @foreach($categories as $indexCategoryProduct => $categoryItemProduct)
         <div class="tab-pane fade {{$indexCategoryProduct == 0 ? 'active in' : ''}}" id="category_tab_{{$categoryItemProduct->id}}">
             @foreach($categoryItemProduct->products as $productItemTabs)
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">

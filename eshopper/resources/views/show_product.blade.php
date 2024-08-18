@@ -1,8 +1,6 @@
 @extends('layouts.master')
 @section('title','Show Product')
-
 @section('content')
-
 @php
 $files = 'http://127.0.0.1:8000'
 @endphp
@@ -16,27 +14,25 @@ $files = 'http://127.0.0.1:8000'
             <div class="col-sm-9 padding-right">
                 <div class="product-details"><!--product-details-->
                     <div class="col-sm-5">
-                        <div class="view-product">
+                        <div id="largeImage" class="view-product">
                             <img src="{{ $files.$products->feature_image_path}}" alt="" />
                             <h3>ZOOM</h3>
                         </div>
-                        <div id="similar-product" class="carousel slide" data-ride="carousel">
+                        <div id="similar-product" style="display: flex; text-align: center; position:relative">
 
                             <!-- Wrapper for slides -->
-                            <div class="carousel-inner">
-                                @foreach($products->productImage as $productImageItem )
-                                <div class="item active">
-                                    <a href=""><img src="{{ $files.$productImageItem->image_path}}" alt=""></a>
-
+                            <div class="carousel-inner" style="display: flex; gap: 10px;">
+                                @foreach($products->productImage as $key => $productImageItem )
+                                <div class="item active {{ $key }}">
+                                    <img style="margin-left: 0 !important; cursor: pointer;" src="{{ $files.$productImageItem->image_path}}" alt="">
                                 </div>
                                 @endforeach
                             </div>
 
-                            <!-- Controls -->
-                            <a class="left item-control" href="#similar-product" data-slide="prev">
+                            <a class="left item-control" style="position: absolute; top: 50%; transform: translateY(-50%); left: -10px;" href="#similar-product" data-slide="prev">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a class="right item-control" style="right: -10;" href="#similar-product" data-slide="next">
+                            <a class="right item-control" style="position: absolute; top: 50%; transform: translateY(-50%); right: -10px;" href="#similar-product" data-slide="next">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </div>
@@ -51,9 +47,9 @@ $files = 'http://127.0.0.1:8000'
                             <span>
                                 <span>{{number_format($products->price)}} VNĐ</span>
                                 <label>Quantity:</label>
-                                <input type="text" value="3" />
+                                <input type="text" id="quantity-product" value="1" />
                                 @csrf
-                                <button type="button" data-url="{{ route('addToCart',['id' => $products->id])}}" class="btn btn-fefault cart">
+                                <button type="button" data-url="{{ route('addToCart',['id' => $products->id])}}" class="btn add-to-cart btn-fefault cart">
                                     <i class="fa fa-shopping-cart"></i>
                                 </button>
                             </span>
@@ -266,4 +262,36 @@ $files = 'http://127.0.0.1:8000'
 @section('js')
 <script src="{{ asset('home/home.js')}}"></script>
 <script src="{{ asset('jquery/sweetalert2.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $('#similar-product .item img').on('click', function() {
+            let newSrc = $(this).attr('src');
+            $('#largeImage img').attr('src', newSrc);
+        })
+
+        // $('#quantity-product').on('change', function() {
+        //     let changeValue = $('#quantity-product').val();
+        //     getValueQuantity(changeValue)
+        // })
+
+        // function getValueQuantity(changeValue) {
+        //     return changeValue;
+        // }
+        $('.add-to-cart').on('click', function() {
+            let urlProduct = $(this).data('url')
+            let quantityValue = $('#quantity-product').val();
+            // console.log(urlProduct)
+            $.ajax({
+                url: urlProduct,
+                type: "GET",
+                data: {
+                    quantityValue: quantityValue
+                },
+                success: function(res){
+
+                }
+            })
+        })
+    })
+</script>
 @endsection

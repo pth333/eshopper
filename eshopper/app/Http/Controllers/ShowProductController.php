@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class ShowProductController extends Controller
 {
-    public function showProduct($id)
+    public function showProduct($id, $slug)
     {
         $products = Product::find($id);
-        $categories = Category::where('parent_id',0)->get();
+        $categories = Category::where('parent_id', 0)->get();
         $categoriesLimit = Category::where('parent_id', 0)->take(3)->get();
-        $productRecommend = Product::Latest('views_count','desc')->take(12)->get();
-        return view('show_product',compact('products','categories','categoriesLimit','productRecommend'));
+        $productRecommend = Product::Latest('views_count', 'desc')->take(12)->get();
+        return view('show_product', compact('products', 'categories', 'categoriesLimit', 'productRecommend'));
     }
 }

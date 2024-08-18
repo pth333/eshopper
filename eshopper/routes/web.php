@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/homepage',[HomeController::class,'index'])->name('home');
 // show product
-Route::get('/show/{id}',[ShowProductController::class,'showProduct'])->name('showProduct');
+Route::get('/show/{id}/{slug}',[ShowProductController::class,'showProduct'])->name('showProduct');
 // tìm kiếm sản phẩm
-Route::get('search',[AjaxSearchController::class,'ajaxSearch'])->name('search');
+Route::get('/search',[AjaxSearchController::class,'ajaxSearch'])->name('search');
 // Đăng nhập
 Route::get('/login',[AdminUserController::class,'loginUsers'])->name('login');
 
